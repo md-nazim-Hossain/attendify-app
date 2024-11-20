@@ -14,7 +14,7 @@ const BASE_BOLD = {
 };
 
 const BOLD = {
-  fontFamily: typography.bold,
+  fontFamily: typography.primaryExtraBold,
   color: colors['primary-foreground'],
 };
 

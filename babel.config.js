@@ -12,6 +12,15 @@ module.exports = {
         allowUndefined: false,
       },
     ],
+    [
+      'module-resolver',
+      {
+        root: ['./src'], // Define the root of your project
+        alias: {
+          '@': './src', // Define the alias to point to the src directory
+        },
+      },
+    ],
   ],
   presets: ['module:@react-native/babel-preset'],
 };
