@@ -4,18 +4,18 @@ import {typography} from '@/theme/typography';
 const BASE = {
   fontFamily: typography.primary,
   fontSize: 16,
-  color: colors['primary-foreground'],
+  color: colors.white,
 };
 
 const BASE_BOLD = {
   fontFamily: typography.primaryBold,
   fontSize: 16,
-  color: colors['primary-foreground'],
+  color: colors.white,
 };
 
 const BOLD = {
   fontFamily: typography.primaryExtraBold,
-  color: colors['primary-foreground'],
+  color: colors.white,
 };
 
 export const presets = {
@@ -27,11 +27,11 @@ export const presets = {
   },
   h2: {
     ...BOLD,
-    fontSize: 28,
+    fontSize: 20,
   },
   h3: {
     ...BASE_BOLD,
-    fontSize: 24,
+    fontSize: 18,
   },
   h4: {
     ...BASE_BOLD,

@@ -1,3 +1,4 @@
+import * as React from 'react';
 import {Text as RNText, TextProps, StyleSheet} from 'react-native';
 import {presets} from './text.preset';
 
