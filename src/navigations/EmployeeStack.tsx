@@ -1,22 +1,27 @@
-import React from 'react';
-import {createStackNavigator} from '@react-navigation/stack';
-import CheckInScreen from '@/screens/protected/employee/CheckInScreen';
-import CheckoutScreen from '@/screens/protected/employee/CheckoutScreen';
-import TakeBreakScreen from '@/screens/protected/employee/TakeBreakScreen';
-import MyRequestScreen from '@/screens/protected/employee/MyRequestScreen';
-import ProfileScreen from '@/screens/protected/employee/ProfileScreen';
+/* eslint-disable react/no-unstable-nested-components */
+import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
+import * as React from 'react';
+import HomeScreen from '@/screens/protected/HomeScreen';
+import ProfileScreen from '@/screens/protected/ProfileScreen';
+import MyRequestScreen from '@/screens/protected/MyRequestScreen';
+import TeamScreen from '@/screens/protected/TeamScreen';
+import TakeBreakScreen from '@/screens/protected/TakeBreakScreen';
+import EmployeeTabBar from '@/components/bottomTabNavigation/EmployeeTabBar';
 
-const Stack = createStackNavigator();
-const EmployeeStack = () => {
+const Tab = createBottomTabNavigator();
+function EmployeeStack() {
   return (
-    <Stack.Navigator>
-      <Stack.Screen name="CheckIn" component={CheckInScreen} />
-      <Stack.Screen name="CheckOut" component={CheckoutScreen} />
-      <Stack.Screen name="MyRequest" component={MyRequestScreen} />
-      <Stack.Screen name="TakeBreak" component={TakeBreakScreen} />
-      <Stack.Screen name="Profile" component={ProfileScreen} />
-    </Stack.Navigator>
+    <Tab.Navigator
+      initialRouteName="Home"
+      screenOptions={{headerShown: false}}
+      tabBar={props => <EmployeeTabBar {...props} />}>
+      <Tab.Screen name="Home" component={HomeScreen} />
+      <Tab.Screen name="MyRequest" component={MyRequestScreen} />
+      <Tab.Screen name="Team" component={TeamScreen} />
+      <Tab.Screen name="TakeBreak" component={TakeBreakScreen} />
+      <Tab.Screen name="Profile" component={ProfileScreen} />
+    </Tab.Navigator>
   );
-};
+}
 
 export default EmployeeStack;

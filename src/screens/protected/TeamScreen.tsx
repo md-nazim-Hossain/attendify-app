@@ -1,12 +1,12 @@
 import {View, Text} from 'react-native';
 import React from 'react';
 
-const MyApprovalsScreen = () => {
+const TeamScreen = () => {
   return (
     <View>
-      <Text>MyApprovalsScreen</Text>
+      <Text>TeamScreen</Text>
     </View>
   );
 };
 
-export default MyApprovalsScreen;
+export default TeamScreen;
