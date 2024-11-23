@@ -10,6 +10,7 @@ import {
 } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import {colors as themeColoros} from '@/theme/colors';
+import {spacing} from '@/theme/spacing';
 
 interface GradientButtonProps {
   title: string;
@@ -61,11 +62,11 @@ const GradientButton: React.FC<GradientButtonProps> = ({
 export default GradientButton;
 const styles = StyleSheet.create({
   button: {
-    borderRadius: 8,
+    borderRadius: 5,
     overflow: 'hidden',
   },
   gradient: {
-    padding: 12,
+    padding: spacing[3],
     borderRadius: 5,
     alignItems: 'center',
     justifyContent: 'center',
@@ -74,8 +75,9 @@ const styles = StyleSheet.create({
     fontSize: 14,
     fontWeight: 'bold',
     color: themeColoros.white,
+    letterSpacing: 0.9,
   },
   disabledText: {
-    color: '#A0A0A0',
+    color: themeColoros.gray,
   },
 });

@@ -7,19 +7,66 @@ import MyRequestScreen from '@/screens/protected/MyRequestScreen';
 import TeamScreen from '@/screens/protected/TeamScreen';
 import TakeBreakScreen from '@/screens/protected/TakeBreakScreen';
 import EmployeeTabBar from '@/components/bottomTabNavigation/EmployeeTabBar';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import {colors} from '@/theme/colors';
 
 const Tab = createBottomTabNavigator();
 function EmployeeStack() {
   return (
     <Tab.Navigator
       initialRouteName="Home"
-      screenOptions={{headerShown: false}}
+      screenOptions={{
+        headerShown: false,
+        animation: 'shift',
+        tabBarActiveTintColor: colors['light-navy-blue'],
+        tabBarInactiveTintColor: colors.gray,
+      }}
       tabBar={props => <EmployeeTabBar {...props} />}>
-      <Tab.Screen name="Home" component={HomeScreen} />
-      <Tab.Screen name="MyRequest" component={MyRequestScreen} />
-      <Tab.Screen name="Team" component={TeamScreen} />
-      <Tab.Screen name="TakeBreak" component={TakeBreakScreen} />
-      <Tab.Screen name="Profile" component={ProfileScreen} />
+      <Tab.Screen
+        name="Home"
+        component={HomeScreen}
+        options={{
+          tabBarIcon: ({color, size}) => (
+            <MaterialCommunityIcons name="home" color={color} size={size} />
+          ),
+        }}
+      />
+      <Tab.Screen
+        name="My Request"
+        component={MyRequestScreen}
+        options={{
+          tabBarIcon: ({color, size}) => (
+            <MaterialCommunityIcons name="home" color={color} size={size} />
+          ),
+        }}
+      />
+      <Tab.Screen
+        name="Team"
+        component={TeamScreen}
+        options={{
+          tabBarIcon: ({color, size}) => (
+            <MaterialCommunityIcons name="home" color={color} size={size} />
+          ),
+        }}
+      />
+      <Tab.Screen
+        name="Take Break"
+        component={TakeBreakScreen}
+        options={{
+          tabBarIcon: ({color, size}) => (
+            <MaterialCommunityIcons name="home" color={color} size={size} />
+          ),
+        }}
+      />
+      <Tab.Screen
+        name="Profile"
+        component={ProfileScreen}
+        options={{
+          tabBarIcon: ({color, size}) => (
+            <MaterialCommunityIcons name="home" color={color} size={size} />
+          ),
+        }}
+      />
     </Tab.Navigator>
   );
 }

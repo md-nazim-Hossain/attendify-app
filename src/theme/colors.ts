@@ -5,6 +5,7 @@ export const colors = {
   'dark-navy-blue': '#1A124D',
   'medium-navy-blue': '#4F4493',
   'light-navy-blue': '#233863',
+  gray: '#909092',
   white: '#FFFFFF',
   'secondary-foreground': '#302E2E',
   muted: '#666565',

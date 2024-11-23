@@ -35,10 +35,18 @@ export const presets = {
   },
   h4: {
     ...BASE_BOLD,
+    fontSize: 16,
+  },
+  h5: {
+    ...BASE_BOLD,
     fontSize: 14,
   },
   small: {
     ...BASE,
     fontSize: 12,
+  },
+  xsmall: {
+    ...BASE,
+    fontSize: 10,
   },
 };

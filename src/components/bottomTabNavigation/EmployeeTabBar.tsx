@@ -1,12 +1,12 @@
-import {View, StyleSheet} from 'react-native';
-import {useLinkBuilder, useTheme} from '@react-navigation/native';
+import {View, StyleSheet, Platform} from 'react-native';
+import {useLinkBuilder} from '@react-navigation/native';
 import {Text, PlatformPressable} from '@react-navigation/elements';
 import * as React from 'react';
 import {BottomTabBarProps} from '@react-navigation/bottom-tabs';
 import {spacing} from '@/theme/spacing';
+import {colors} from '@/theme/colors';
 
 function EmployeeTabBar({state, descriptors, navigation}: BottomTabBarProps) {
-  const {colors} = useTheme();
   const {buildHref} = useLinkBuilder();
 
   return (
@@ -41,6 +41,13 @@ function EmployeeTabBar({state, descriptors, navigation}: BottomTabBarProps) {
           });
         };
 
+        const icon = options.tabBarIcon
+          ? options.tabBarIcon({
+              color: isFocused ? colors['light-navy-blue'] : colors.gray,
+              size: 24,
+            } as any)
+          : null;
+
         return (
           <PlatformPressable
             key={route.key}
@@ -51,10 +58,11 @@ function EmployeeTabBar({state, descriptors, navigation}: BottomTabBarProps) {
             onPress={onPress}
             onLongPress={onLongPress}
             style={styles.platform}>
+            <View style={styles.iconWrapper}>{icon}</View>
             <Text
               style={[
                 styles.text,
-                {color: isFocused ? colors.primary : colors.text},
+                {color: isFocused ? colors['dark-navy-blue'] : colors.gray},
               ]}>
               {label as string}
             </Text>
@@ -66,17 +74,34 @@ function EmployeeTabBar({state, descriptors, navigation}: BottomTabBarProps) {
 }
 
 export default EmployeeTabBar;
+
 const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
-    borderWidth: 1,
-    padding: spacing[3],
   },
   platform: {
     flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    ...Platform.select({
+      ios: {
+        shadowColor: '#000',
+        shadowOffset: {width: 0, height: 0},
+        shadowOpacity: 0.29,
+        shadowRadius: 4,
+      },
+      android: {
+        elevation: 5,
+      },
+    }),
+  },
+  iconWrapper: {
+    alignItems: 'center',
   },
   text: {
-    borderWidth: 1,
     textAlign: 'center',
+    fontSize: 12,
+    fontWeight: '600',
+    paddingBottom: spacing[3],
   },
 });
