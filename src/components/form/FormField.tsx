@@ -14,8 +14,18 @@ type Props = {
   type?: KeyboardTypeOptions;
   form: UseFormReturn<any, any, undefined>;
   isSecure?: boolean;
+  withIcon?: boolean;
+  Icon?: React.ReactNode;
 };
-const FormField = ({name, placeHolder, style, type, form, isSecure}: Props) => {
+const FormField = ({
+  name,
+  placeHolder,
+  style,
+  type,
+  form,
+  isSecure,
+  Icon,
+}: Props) => {
   const {errors} = form.formState;
   return (
     <View>
@@ -32,6 +42,7 @@ const FormField = ({name, placeHolder, style, type, form, isSecure}: Props) => {
             keyboardType={type ?? 'default'}
             secureTextEntry={isSecure || false}
             placeholderTextColor={applyOpacity(colors.white, 0.8)}
+            Icon={Icon}
           />
         )}
       />
@@ -49,7 +60,10 @@ export default FormField;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    flexDirection: 'row',
     gap: spacing[1] - 2,
+    borderWidth: 1,
+    borderColor: colors.error,
   },
   error: {
     color: colors.error,

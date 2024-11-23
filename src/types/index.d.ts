@@ -106,3 +106,10 @@ export interface ITeam {
   createdAt: string;
   updatedAt: string;
 }
+
+export interface Measure {
+  x: number;
+  y: number;
+  width: number;
+  height: number;
+}

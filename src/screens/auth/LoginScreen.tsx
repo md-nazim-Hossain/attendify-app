@@ -1,4 +1,4 @@
-import {View, StyleSheet, Image, Button} from 'react-native';
+import {View, StyleSheet, Image} from 'react-native';
 import React from 'react';
 import {colors} from '@/theme/colors';
 import {spacing} from '@/theme/spacing';
@@ -8,10 +8,13 @@ import {useForm} from 'react-hook-form';
 import {ILoginSchema, logingSchema} from '@/const/schema';
 import {zodResolver} from '@hookform/resolvers/zod';
 import Text from '@/components/text/Text';
+import GradientButton from '@/components/button/GradientButton';
+import {Link} from '@react-navigation/native';
 
 const LoginScreen = ({}) => {
   const form = useForm<ILoginSchema>({
     resolver: zodResolver(logingSchema),
+    mode: 'all',
   });
 
   async function onSubmit(values: ILoginSchema) {
@@ -43,8 +46,17 @@ const LoginScreen = ({}) => {
             placeHolder="Enter password"
             isSecure
           />
-
-          <Button title="Login" onPress={form.handleSubmit(onSubmit)} />
+          <Link style={styles.link} screen={'ForgottenPassword'}>
+            Forgot Password?
+          </Link>
+        </View>
+        <View style={styles.buttonContainer}>
+          <GradientButton
+            title="Sign-In"
+            textStyle={styles.button}
+            colors={[colors.white, '#CDCBD8', '#4D4774']}
+            onPress={form.handleSubmit(onSubmit)}
+          />
         </View>
       </View>
     </View>
@@ -90,7 +102,31 @@ const styles = StyleSheet.create({
   },
   title: {
     fontWeight: 800,
-    marginBottom: spacing[11],
+    marginBottom: spacing[8],
     textAlign: 'center',
+  },
+  iconStyle: {
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: spacing[3] - 2,
+  },
+  buttonContainer: {
+    marginTop: spacing[8],
+  },
+  button: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    color: colors['dark-navy-blue'],
+  },
+  link: {
+    color: colors.white,
+    fontWeight: 500,
+    fontSize: 12,
+    letterSpacing: 12 * 0.15,
+    marginTop: spacing[2],
+  },
+  linkHover: {
+    textDecorationLine: 'underline',
   },
 });
