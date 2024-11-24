@@ -4,8 +4,12 @@ import {spacing} from '@/theme/spacing';
 import {colors} from '@/theme/colors';
 import Text from './text/Text';
 import Badge from './Badge';
+import Button from './button/Button';
 
-const MyRequest = () => {
+type Props = {
+  variant?: 'admin' | 'employee';
+};
+const MyRequest = ({variant = 'employee'}: Props) => {
   return (
     <View style={styles.container}>
       <View style={styles.header}>
@@ -14,12 +18,13 @@ const MyRequest = () => {
         </Text>
         <Badge status="Approved" />
       </View>
-      <View style={styles.contentContainer}>
-        <Image
-          source={require('@/assets/images/date-icon.png')}
-          style={styles.dateIcon}
-        />
-        <View>
+      <View>
+        <View style={styles.contentContainer}>
+          <Image
+            source={require('@/assets/images/date-icon.png')}
+            style={styles.dateIcon}
+          />
+
           <View style={styles.leaveContainer}>
             <Text preset="small" style={styles.leaveText}>
               Leave from :
@@ -28,11 +33,38 @@ const MyRequest = () => {
               29 Jan - 05 Feb
             </Text>
           </View>
+        </View>
+        {variant === 'employee' && (
           <Text preset="xsmall" style={styles.smllText}>
             Requested on 19 Apr, 5:30pm
           </Text>
-        </View>
+        )}
       </View>
+
+      {variant === 'admin' && (
+        <View style={[styles.contentContainer, {marginTop: spacing[2]}]}>
+          <Image
+            source={require('@/assets/images/men.png')}
+            style={styles.dateIcon}
+          />
+
+          <View style={styles.leaveContainer}>
+            <Text preset="small" style={styles.designationText}>
+              Software Engineer :
+            </Text>
+            <Text preset="small" style={styles.leaveDate}>
+              Md Nazim Hossain
+            </Text>
+          </View>
+        </View>
+      )}
+
+      {variant === 'admin' && (
+        <View style={styles.actionContainer}>
+          <Button variant="outline" title="Cancel" />
+          <Button variant="primary" title="Approve" />
+        </View>
+      )}
     </View>
   );
 };
@@ -69,6 +101,7 @@ const styles = StyleSheet.create({
   },
   contentContainer: {
     flexDirection: 'row',
+    alignItems: 'center',
     gap: spacing[2],
   },
   dateIcon: {
@@ -92,6 +125,18 @@ const styles = StyleSheet.create({
   smllText: {
     color: colors.accent,
     fontWeight: 500,
-    marginTop: spacing[1],
+    marginTop: spacing[1 - 2],
+    paddingLeft: spacing[8],
+  },
+  designationText: {
+    color: colors.accent,
+    fontWeight: 500,
+  },
+  actionContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: spacing[4],
+    marginTop: spacing[7],
+    paddingLeft: spacing[8],
   },
 });

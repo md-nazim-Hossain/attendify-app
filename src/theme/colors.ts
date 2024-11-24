@@ -13,4 +13,6 @@ export const colors = {
   accent: '#A4A4A5',
   sucess: '#83B88B',
   error: '#C66E75',
+  'primary-light': '#4C457B',
+  'gray-dark': '#979799',
 };

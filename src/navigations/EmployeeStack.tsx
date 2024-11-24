@@ -1,4 +1,3 @@
-/* eslint-disable react/no-unstable-nested-components */
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import * as React from 'react';
 import HomeScreen from '@/screens/protected/HomeScreen';
@@ -6,12 +5,14 @@ import ProfileScreen from '@/screens/protected/ProfileScreen';
 import MyRequestScreen from '@/screens/protected/MyRequestScreen';
 import TeamScreen from '@/screens/protected/TeamScreen';
 import TakeBreakScreen from '@/screens/protected/TakeBreakScreen';
-import EmployeeTabBar from '@/components/bottomTabNavigation/EmployeeTabBar';
+import TabBar from '@/components/bottomTabNavigation/TabBar';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import {colors} from '@/theme/colors';
+import {useAuth} from './AuthProvider';
 
 const Tab = createBottomTabNavigator();
 function EmployeeStack() {
+  const {isAdmin} = useAuth();
   return (
     <Tab.Navigator
       initialRouteName="Home"
@@ -21,7 +22,7 @@ function EmployeeStack() {
         tabBarActiveTintColor: colors['light-navy-blue'],
         tabBarInactiveTintColor: colors.gray,
       }}
-      tabBar={props => <EmployeeTabBar {...props} />}>
+      tabBar={props => <TabBar {...props} />}>
       <Tab.Screen
         name="Home"
         component={HomeScreen}
@@ -40,15 +41,17 @@ function EmployeeStack() {
           ),
         }}
       />
-      <Tab.Screen
-        name="Team"
-        component={TeamScreen}
-        options={{
-          tabBarIcon: ({color, size}) => (
-            <MaterialCommunityIcons name="home" color={color} size={size} />
-          ),
-        }}
-      />
+      {isAdmin && (
+        <Tab.Screen
+          name="Team"
+          component={TeamScreen}
+          options={{
+            tabBarIcon: ({color, size}) => (
+              <MaterialCommunityIcons name="home" color={color} size={size} />
+            ),
+          }}
+        />
+      )}
       <Tab.Screen
         name="Take Break"
         component={TakeBreakScreen}

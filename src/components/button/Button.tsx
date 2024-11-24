@@ -1,3 +1,5 @@
+import {colors} from '@/theme/colors';
+import {spacing} from '@/theme/spacing';
 import React from 'react';
 import {
   TouchableOpacity,
@@ -9,7 +11,12 @@ import {
   TextStyle,
 } from 'react-native';
 
-type ButtonVariants = 'primary' | 'secondary' | 'danger' | 'disabled';
+type ButtonVariants =
+  | 'primary'
+  | 'secondary'
+  | 'danger'
+  | 'disabled'
+  | 'outline';
 
 interface ButtonProps {
   title: string;
@@ -28,8 +35,7 @@ const Button: React.FC<ButtonProps> = ({
   style,
   textStyle,
 }) => {
-  const variantStyles = styles[variant] || styles.primary;
-
+  const variantStyles = styles[variant];
   return (
     <TouchableOpacity
       style={[styles.base, variantStyles, disabled && styles.disabled, style]}
@@ -45,16 +51,21 @@ const Button: React.FC<ButtonProps> = ({
 export default Button;
 const styles = StyleSheet.create({
   base: {
-    padding: 12,
-    borderRadius: 8,
+    borderRadius: spacing[1] + 1,
+    fontWeight: 'bold',
     alignItems: 'center',
     justifyContent: 'center',
+    borderWidth: 2,
+    width: 102,
+    height: 34,
   },
   primary: {
-    backgroundColor: '#007BFF',
+    backgroundColor: colors['primary-light'],
+    borderColor: colors['primary-light'],
   },
   secondary: {
-    backgroundColor: '#6C757D',
+    backgroundColor: 'transparent',
+    borderColor: colors['gray-dark'],
   },
   danger: {
     backgroundColor: '#DC3545',
@@ -65,17 +76,25 @@ const styles = StyleSheet.create({
   text: {
     fontSize: 16,
     fontWeight: 'bold',
+    lineHeight: 20,
   },
   primaryText: {
-    color: '#FFFFFF',
+    color: colors.white,
   },
   secondaryText: {
-    color: '#FFFFFF',
+    color: colors['gray-dark'],
   },
   dangerText: {
     color: '#FFFFFF',
   },
   disabledText: {
     color: '#A0A0A0',
+  },
+  outline: {
+    borderColor: colors['primary-light'],
+    backgroundColor: 'transparent',
+  },
+  outlineText: {
+    color: colors['primary-light'],
   },
 });

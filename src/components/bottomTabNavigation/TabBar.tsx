@@ -6,7 +6,7 @@ import {BottomTabBarProps} from '@react-navigation/bottom-tabs';
 import {spacing} from '@/theme/spacing';
 import {colors} from '@/theme/colors';
 
-function EmployeeTabBar({state, descriptors, navigation}: BottomTabBarProps) {
+function TabBar({state, descriptors, navigation}: BottomTabBarProps) {
   const {buildHref} = useLinkBuilder();
 
   return (
@@ -73,7 +73,7 @@ function EmployeeTabBar({state, descriptors, navigation}: BottomTabBarProps) {
   );
 }
 
-export default EmployeeTabBar;
+export default TabBar;
 
 const styles = StyleSheet.create({
   container: {
