@@ -13,6 +13,8 @@ import Text from '../text/Text';
 import {colors} from '@/theme/colors';
 import DatePickerInput from './DatePickerInput';
 import FormField from '../form/FormField';
+import {Picker} from '@react-native-picker/picker';
+import {ENUM_LEAVE_TYPE} from '@/enums';
 
 type Props = {
   trigger: ({ref}: {ref: any}) => ReactNode;
@@ -29,7 +31,7 @@ const AddNewLeaveRequestForm = ({trigger}: Props) => {
   }
 
   const errors = form.formState.errors;
-  console.log(errors);
+
   return (
     <View style={styles.container}>
       {trigger({ref: refRBSheet})}
@@ -146,6 +148,35 @@ const AddNewLeaveRequestForm = ({trigger}: Props) => {
                 </View>
               )}
             />
+
+            <View
+              style={[
+                styles.borderBottom,
+                {
+                  paddingHorizontal: spacing[4],
+                },
+              ]}>
+              <Picker
+                selectedValue={form.getValues('leaveType')}
+                onValueChange={itemValue =>
+                  form.setValue('leaveType', itemValue, {
+                    shouldValidate: true,
+                    shouldDirty: true,
+                    shouldTouch: true,
+                  })
+                }>
+                <Picker.Item label="Select Leave Type" value="" />
+                {Object.values(ENUM_LEAVE_TYPE).map(leaveType => (
+                  <Picker.Item
+                    key={leaveType}
+                    label={
+                      leaveType.charAt(0).toUpperCase() + leaveType.slice(1)
+                    }
+                    value={leaveType}
+                  />
+                ))}
+              </Picker>
+            </View>
 
             <FormField
               preset="primary"
