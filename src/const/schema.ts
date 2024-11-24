@@ -1,3 +1,4 @@
+import {ENUM_LEAVE_TYPE} from '@/enums';
 import {z} from 'zod';
 
 export const logingSchema = z.object({
@@ -8,5 +9,36 @@ export const logingSchema = z.object({
     .string({required_error: 'Password is required'})
     .min(6, {message: 'Password must be at least 6 characters'}),
 });
-
 export type ILoginSchema = z.infer<typeof logingSchema>;
+
+export const addLeaveRequestSchema = z
+  .object({
+    leaveType: z.enum(Object.values(ENUM_LEAVE_TYPE) as [string, ...string[]], {
+      required_error: 'Leave type is required',
+      message: 'Invalid leave type',
+    }),
+    startDate: z.string({required_error: 'Start date is required'}),
+    endDate: z.string({required_error: 'End date is required'}),
+    reason: z.string({required_error: 'Reason is required'}),
+  })
+  .refine(
+    ({startDate, endDate}) => {
+      const start = new Date(startDate);
+      const end = new Date(endDate);
+      return start < end;
+    },
+    {
+      message: 'Start date must be before end date',
+    },
+  )
+  .refine(
+    ({startDate}) => {
+      const start = new Date(startDate);
+      return start > new Date();
+    },
+    {
+      message: 'Start date must be after current date',
+    },
+  );
+
+export type IAddLeaveRequestSchema = z.infer<typeof addLeaveRequestSchema>;

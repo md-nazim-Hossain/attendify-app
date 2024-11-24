@@ -2,9 +2,9 @@ import {Image, Platform, StyleSheet, View} from 'react-native';
 import React from 'react';
 import {spacing} from '@/theme/spacing';
 import {colors} from '@/theme/colors';
-import Text from './text/Text';
-import Badge from './Badge';
-import Button from './button/Button';
+import Text from '../text/Text';
+import Badge from '../Badge';
+import Button from '../button/Button';
 
 type Props = {
   variant?: 'admin' | 'employee';

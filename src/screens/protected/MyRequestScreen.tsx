@@ -1,11 +1,12 @@
 import {View} from 'react-native';
 import React from 'react';
-import MyRequest from '@/components/MyRequest';
 import {StyleSheet} from 'react-native';
 import {spacing} from '@/theme/spacing';
 import {colors} from '@/theme/colors';
 import GradientButton from '@/components/button/GradientButton';
 import {useAuth} from '@/navigations/AuthProvider';
+import AddNewLeaveRequestForm from '@/components/leaveRequest/AddNewLeaveRequestForm';
+import MyRequest from '@/components/leaveRequest/MyRequest';
 
 const MyRequestScreen = () => {
   const {isAdmin} = useAuth();
@@ -14,7 +15,16 @@ const MyRequestScreen = () => {
       <View>
         <MyRequest />
       </View>
-      {!isAdmin && <GradientButton title="+ Add leave request" />}
+      {!isAdmin && (
+        <AddNewLeaveRequestForm
+          trigger={({ref}) => (
+            <GradientButton
+              onPress={() => ref.current.open()}
+              title="+ Add leave request"
+            />
+          )}
+        />
+      )}
     </View>
   );
 };
@@ -27,5 +37,6 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     padding: spacing[3],
     backgroundColor: colors.white,
+    gap: spacing[3],
   },
 });

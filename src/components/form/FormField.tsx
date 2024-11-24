@@ -6,6 +6,7 @@ import {spacing} from '@/theme/spacing';
 import {applyOpacity} from '@/utils/applyOpacity';
 import TextInput from '../textInput/TextInput';
 import Text from '../text/Text';
+import {presets} from '../textInput/text-input-preset';
 
 type Props = {
   name: string;
@@ -16,6 +17,9 @@ type Props = {
   isSecure?: boolean;
   withIcon?: boolean;
   Icon?: React.ReactNode;
+  preset?: keyof typeof presets;
+  placeholderTextColor?: string;
+  errorStyle?: TextProps['style'];
 };
 const FormField = ({
   name,
@@ -25,6 +29,9 @@ const FormField = ({
   form,
   isSecure,
   Icon,
+  preset,
+  placeholderTextColor = applyOpacity(colors.white, 0.8),
+  errorStyle,
 }: Props) => {
   const {errors} = form.formState;
   return (
@@ -34,6 +41,7 @@ const FormField = ({
         name={name}
         render={({field: {onChange, value, onBlur}}) => (
           <TextInput
+            preset={preset}
             onBlur={onBlur}
             style={style}
             onChangeText={onChange}
@@ -41,13 +49,13 @@ const FormField = ({
             placeholder={placeHolder ?? 'Enter value'}
             keyboardType={type ?? 'default'}
             secureTextEntry={isSecure || false}
-            placeholderTextColor={applyOpacity(colors.white, 0.8)}
+            placeholderTextColor={placeholderTextColor}
             Icon={Icon}
           />
         )}
       />
       {errors[name] && (
-        <Text preset="small" style={styles.error}>
+        <Text preset="small" style={[styles.error, errorStyle]}>
           {errors[name]?.message as string}
         </Text>
       )}
