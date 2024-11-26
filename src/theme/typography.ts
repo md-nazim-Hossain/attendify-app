@@ -5,4 +5,5 @@ export const typography = {
   primaryMedium: 'Inter-Medium',
   primaryExtraBold: 'Inter-ExtraBold',
   krona: 'KronaOne-Regular',
+  jua: 'Jua-Regular',
 };
