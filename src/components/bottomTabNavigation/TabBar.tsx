@@ -1,10 +1,11 @@
 import {View, StyleSheet, Platform} from 'react-native';
 import {useLinkBuilder} from '@react-navigation/native';
-import {Text, PlatformPressable} from '@react-navigation/elements';
+import {PlatformPressable} from '@react-navigation/elements';
 import * as React from 'react';
 import {BottomTabBarProps} from '@react-navigation/bottom-tabs';
 import {spacing} from '@/theme/spacing';
 import {colors} from '@/theme/colors';
+import Text from '../text/Text';
 
 function TabBar({state, descriptors, navigation}: BottomTabBarProps) {
   const {buildHref} = useLinkBuilder();
@@ -60,9 +61,11 @@ function TabBar({state, descriptors, navigation}: BottomTabBarProps) {
             style={styles.platform}>
             <View style={styles.iconWrapper}>{icon}</View>
             <Text
+              preset="small"
               style={[
                 styles.text,
                 {color: isFocused ? colors['dark-navy-blue'] : colors.gray},
+                {fontWeight: isFocused ? 700 : 500},
               ]}>
               {label as string}
             </Text>
@@ -100,8 +103,6 @@ const styles = StyleSheet.create({
   },
   text: {
     textAlign: 'center',
-    fontSize: 12,
-    fontWeight: '600',
     paddingBottom: spacing[3],
   },
 });

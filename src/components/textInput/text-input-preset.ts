@@ -1,9 +1,10 @@
 import {colors} from '@/theme/colors';
+import {spacing} from '@/theme/spacing';
 
 const BASE = {
   letterSpacing: 1.5,
   fontSize: 16,
-  marginBottom: 10,
+  marginBottom: spacing[1],
   padding: 16,
 };
 

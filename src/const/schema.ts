@@ -1,4 +1,4 @@
-import {ENUM_LEAVE_TYPE} from '@/enums';
+import {ENUM_BREAK_TYPE, ENUM_LEAVE_TYPE} from '@/enums';
 import {z} from 'zod';
 
 export const logingSchema = z.object({
@@ -42,3 +42,18 @@ export const addLeaveRequestSchema = z
   );
 
 export type IAddLeaveRequestSchema = z.infer<typeof addLeaveRequestSchema>;
+
+export const addDailyBreakRequestSchema = z.object({
+  type: z
+    .enum(Object.values(ENUM_BREAK_TYPE) as [string, ...string[]], {
+      required_error: 'Break type is required',
+      message: 'Invalid break type',
+    })
+    .optional(),
+  endTime: z.string({required_error: 'End date is required'}),
+  reason: z.string({required_error: 'Reason is required'}),
+});
+
+export type IAddDailyBreakRequestSchema = z.infer<
+  typeof addDailyBreakRequestSchema
+>;

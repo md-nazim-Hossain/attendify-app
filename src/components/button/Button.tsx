@@ -16,7 +16,8 @@ type ButtonVariants =
   | 'secondary'
   | 'danger'
   | 'disabled'
-  | 'outline';
+  | 'outline'
+  | 'transparent';
 
 interface ButtonProps {
   title: string;
@@ -96,5 +97,15 @@ const styles = StyleSheet.create({
   },
   outlineText: {
     color: colors['primary-light'],
+  },
+  transparent: {
+    backgroundColor: 'transparent',
+    borderWidth: 0,
+    fontSize: 14,
+    width: 'auto',
+    paddingHorizontal: spacing[2],
+  },
+  transparentText: {
+    color: colors['light-navy-blue'],
   },
 });

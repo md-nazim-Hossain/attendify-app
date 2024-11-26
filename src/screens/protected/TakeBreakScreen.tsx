@@ -1,38 +1,33 @@
-import {View, Image, StyleSheet, TouchableOpacity} from 'react-native';
-import React from 'react';
+import {View, Image, StyleSheet} from 'react-native';
+import React, {useState} from 'react';
 import {spacing} from '@/theme/spacing';
 import Text from '@/components/text/Text';
 import {typography} from '@/theme/typography';
 import {colors} from '@/theme/colors';
+import CustomBreakForm from '@/components/takeBreak/CustomBreakForm';
+import PredifientBreak from '@/components/takeBreak/PredifientBreak';
 
 const TakeBreakScreen = () => {
+  const [other, setOther] = useState<boolean>(false);
   return (
     <View style={styles.container}>
       <Image
         style={styles.backgroundImage}
-        source={require('@/assets/images/break-1.png')}
+        source={
+          !other
+            ? require('@/assets/images/break-1.png')
+            : require('@/assets/images/break-2.png')
+        }
       />
       <View style={styles.contentContainer}>
         <Text preset="h2" style={styles.title}>
           Let’s take a break
         </Text>
-        <TouchableOpacity activeOpacity={0.9} style={styles.buttonStyle}>
-          <Text preset="h3" style={styles.buttonText}>
-            Lunch/Dinner
-          </Text>
-          <Text preset="small">For 45 min</Text>
-        </TouchableOpacity>
-        <TouchableOpacity activeOpacity={0.9} style={styles.buttonStyle}>
-          <Text preset="h3" style={styles.buttonText}>
-            Tea
-          </Text>
-          <Text preset="small">For 10 min</Text>
-        </TouchableOpacity>
-        <TouchableOpacity activeOpacity={0.9} style={styles.buttonStyle}>
-          <Text preset="h3" style={styles.buttonText}>
-            Other
-          </Text>
-        </TouchableOpacity>
+        {other ? (
+          <CustomBreakForm onBack={() => setOther(false)} />
+        ) : (
+          <PredifientBreak onPressOtherButton={() => setOther(true)} />
+        )}
       </View>
     </View>
   );
@@ -48,7 +43,7 @@ const styles = StyleSheet.create({
   },
   contentContainer: {
     paddingHorizontal: spacing[7] - 2,
-    paddingVertical: spacing[12] - 2,
+    paddingVertical: spacing[11],
   },
   backgroundImage: {
     resizeMode: 'cover',
@@ -68,18 +63,5 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     marginBottom: spacing[4] + 2,
     fontWeight: 500,
-  },
-  buttonStyle: {
-    height: 65,
-    borderRadius: 3,
-    backgroundColor: colors['light-navy-blue'],
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginBottom: spacing[4] - 1,
-  },
-  buttonText: {
-    fontWeight: 700,
-    letterSpacing: 1.7,
-    textAlign: 'center',
   },
 });

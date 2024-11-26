@@ -1,4 +1,10 @@
-import {KeyboardTypeOptions, StyleSheet, TextProps, View} from 'react-native';
+import {
+  KeyboardTypeOptions,
+  StyleSheet,
+  TextInputProps,
+  TextProps,
+  View,
+} from 'react-native';
 import React from 'react';
 import {Controller, UseFormReturn} from 'react-hook-form';
 import {colors} from '@/theme/colors';
@@ -20,6 +26,7 @@ type Props = {
   preset?: keyof typeof presets;
   placeholderTextColor?: string;
   errorStyle?: TextProps['style'];
+  [key: string]: TextInputProps | any;
 };
 const FormField = ({
   name,
@@ -32,10 +39,11 @@ const FormField = ({
   preset,
   placeholderTextColor = applyOpacity(colors.white, 0.8),
   errorStyle,
+  ...rest
 }: Props) => {
   const {errors} = form.formState;
   return (
-    <View>
+    <View style={styles.container}>
       <Controller
         control={form.control}
         name={name}
@@ -51,6 +59,7 @@ const FormField = ({
             secureTextEntry={isSecure || false}
             placeholderTextColor={placeholderTextColor}
             Icon={Icon}
+            {...rest}
           />
         )}
       />
@@ -67,11 +76,7 @@ export default FormField;
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    flexDirection: 'row',
-    gap: spacing[1] - 2,
-    borderWidth: 1,
-    borderColor: colors.error,
+    marginBottom: spacing[2] + 2,
   },
   error: {
     color: colors.error,
