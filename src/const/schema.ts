@@ -57,3 +57,16 @@ export const addDailyBreakRequestSchema = z.object({
 export type IAddDailyBreakRequestSchema = z.infer<
   typeof addDailyBreakRequestSchema
 >;
+
+export const updateEmployeeSchema = z.object({
+  fullName: z.string({required_error: 'Name is required'}),
+  email: z
+    .string({required_error: 'Email is required'})
+    .email({message: 'Invalid email'}),
+  phone: z.string({required_error: 'Phone is required'}).optional(),
+  address: z.string({required_error: 'Address is required'}).optional(),
+  designation: z.string({required_error: 'Designation is required'}).optional(),
+  photo: z.string({required_error: 'Photo is required'}).optional(),
+});
+
+export type IUpdateEmployeeSchema = z.infer<typeof updateEmployeeSchema>;

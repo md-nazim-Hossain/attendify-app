@@ -39,9 +39,9 @@ const Button: React.FC<ButtonProps> = ({
   const variantStyles = styles[variant];
   return (
     <TouchableOpacity
-      style={[styles.base, variantStyles, disabled && styles.disabled, style]}
+      style={[styles.base, variantStyles, disabled && {opacity: 0.6}, style]}
       onPress={!disabled ? onPress : undefined}
-      activeOpacity={disabled ? 1 : 0.8}>
+      activeOpacity={disabled ? 0.6 : 0.9}>
       <Text style={[styles.text, styles[`${variant}Text`], textStyle]}>
         {title}
       </Text>

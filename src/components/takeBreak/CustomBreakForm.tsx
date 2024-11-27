@@ -12,6 +12,7 @@ import {
 import {zodResolver} from '@hookform/resolvers/zod';
 import FormField from '../form/FormField';
 import Button from '../button/Button';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
 type Props = {
   onBack: () => void;
@@ -75,21 +76,27 @@ const CustomBreakForm = ({onBack}: Props) => {
       />
       <View>
         <FormField
-          preset="primary"
-          style={[styles.formField, {height: 42}]}
-          placeholderTextColor={colors['light-navy-blue']}
+          containerStyle={{paddingLeft: spacing[3]}}
+          variant="filled"
           form={form}
           name="endTime"
-          placeHolder="Example:0:00"
-          type="numeric"
+          placeholder="Example:0:00"
+          keyboardType="numeric"
+          Icon={
+            <MaterialCommunityIcons
+              size={24}
+              color={colors['light-navy-blue']}
+              name="clock-outline"
+            />
+          }
         />
         <FormField
-          preset="primary"
-          style={[styles.formField, {height: 100}]}
-          placeholderTextColor={colors['light-navy-blue']}
+          containerStyle={styles.formFieldTextArea}
+          style={styles.formFieldTextArea}
+          variant="filled"
           form={form}
           name="reason"
-          placeHolder="Reason"
+          placeholder="Reason"
           numberOfLines={5}
           textAlignVertical="top"
           multiline
@@ -128,9 +135,8 @@ const styles = StyleSheet.create({
   smallText: {
     fontWeight: 400,
   },
-  formField: {
-    paddingHorizontal: spacing[4],
-    paddingVertical: spacing[2],
+  formFieldTextArea: {
+    height: 100,
   },
   buttonContainer: {
     flexDirection: 'row',

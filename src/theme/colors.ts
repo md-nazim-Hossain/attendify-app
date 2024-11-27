@@ -6,6 +6,7 @@ export const colors = {
   'medium-navy-blue': '#4F4493',
   'light-navy-blue': '#233863',
   gray: '#909092',
+  'light-gray': '#D9D9D9',
   white: '#FFFFFF',
   'secondary-foreground': '#302E2E',
   muted: '#666565',
@@ -15,4 +16,5 @@ export const colors = {
   error: '#C66E75',
   'primary-light': '#4C457B',
   'gray-dark': '#979799',
+  black: '#000000',
 };

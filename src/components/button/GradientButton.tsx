@@ -43,19 +43,16 @@ const GradientButton: React.FC<GradientButtonProps> = ({
 }) => {
   return (
     <TouchableOpacity
-      style={[styles.button, style]}
+      style={[styles.button, style, disabled && {opacity: 0.6}]}
       onPress={!disabled ? onPress : undefined}
-      activeOpacity={disabled ? 1 : 0.8}>
+      activeOpacity={disabled ? 0.6 : 0.9}>
       <LinearGradient
-        colors={disabled ? ['#E0E0E0', '#E0E0E0'] : colors}
+        colors={colors}
         start={start}
         end={end}
         style={[styles.gradient, gradientStyle]}
         locations={locations}>
-        <Text
-          style={[styles.text, disabled ? styles.disabledText : {}, textStyle]}>
-          {title}
-        </Text>
+        <Text style={[styles.text, textStyle]}>{title}</Text>
       </LinearGradient>
     </TouchableOpacity>
   );
@@ -78,8 +75,5 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     color: themeColoros.white,
     letterSpacing: 0.9,
-  },
-  disabledText: {
-    color: themeColoros.gray,
   },
 });

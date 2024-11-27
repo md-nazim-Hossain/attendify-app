@@ -1,4 +1,4 @@
-import {View, StyleSheet, Platform} from 'react-native';
+import {View, StyleSheet} from 'react-native';
 import {useLinkBuilder} from '@react-navigation/native';
 import {PlatformPressable} from '@react-navigation/elements';
 import * as React from 'react';
@@ -46,6 +46,7 @@ function TabBar({state, descriptors, navigation}: BottomTabBarProps) {
           ? options.tabBarIcon({
               color: isFocused ? colors['light-navy-blue'] : colors.gray,
               size: 24,
+              fontWeight: isFocused ? 700 : 300,
             } as any)
           : null;
 
@@ -59,11 +60,10 @@ function TabBar({state, descriptors, navigation}: BottomTabBarProps) {
             onPress={onPress}
             onLongPress={onLongPress}
             style={styles.platform}>
-            <View style={styles.iconWrapper}>{icon}</View>
+            <View>{icon}</View>
             <Text
               preset="small"
               style={[
-                styles.text,
                 {color: isFocused ? colors['dark-navy-blue'] : colors.gray},
                 {fontWeight: isFocused ? 700 : 500},
               ]}>
@@ -86,23 +86,6 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
-    ...Platform.select({
-      ios: {
-        shadowColor: '#000',
-        shadowOffset: {width: 0, height: 0},
-        shadowOpacity: 0.29,
-        shadowRadius: 4,
-      },
-      android: {
-        elevation: 5,
-      },
-    }),
-  },
-  iconWrapper: {
-    alignItems: 'center',
-  },
-  text: {
-    textAlign: 'center',
-    paddingBottom: spacing[3],
+    paddingVertical: spacing[1],
   },
 });
