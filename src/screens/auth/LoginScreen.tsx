@@ -10,6 +10,7 @@ import {zodResolver} from '@hookform/resolvers/zod';
 import Text from '@/components/text/Text';
 import GradientButton from '@/components/button/GradientButton';
 import {Link} from '@react-navigation/native';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
 const LoginScreen = ({}) => {
   const form = useForm<ILoginSchema>({
@@ -36,15 +37,30 @@ const LoginScreen = ({}) => {
           <FormField
             form={form}
             name="email"
-            type="email-address"
-            placeHolder="Enter email"
+            keyboardType="email-address"
+            placeholder="Enter email"
+            Icon={
+              <MaterialCommunityIcons
+                size={24}
+                style={styles.iconStyle}
+                name="email"
+              />
+            }
           />
           <FormField
+            containerStyle={{paddingRight: spacing[3]}}
             form={form}
             name="password"
-            type="numeric"
-            placeHolder="Enter password"
-            isSecure
+            keyboardType="numeric"
+            placeholder="Enter password"
+            secureTextEntry
+            Icon={
+              <MaterialCommunityIcons
+                size={24}
+                style={styles.iconStyle}
+                name="key-variant"
+              />
+            }
           />
           <Link style={styles.link} screen={'ForgottenPassword'}>
             Forgot Password?
@@ -52,6 +68,7 @@ const LoginScreen = ({}) => {
         </View>
         <View style={styles.buttonContainer}>
           <GradientButton
+            disabled={!form.formState.isSubmitting}
             title="Sign-In"
             textStyle={styles.button}
             colors={[colors.white, '#CDCBD8', '#4D4774']}
@@ -105,12 +122,7 @@ const styles = StyleSheet.create({
     marginBottom: spacing[8],
     textAlign: 'center',
   },
-  iconStyle: {
-    display: 'flex',
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: spacing[3] - 2,
-  },
+
   buttonContainer: {
     marginTop: spacing[8],
   },
@@ -128,5 +140,8 @@ const styles = StyleSheet.create({
   },
   linkHover: {
     textDecorationLine: 'underline',
+  },
+  iconStyle: {
+    color: colors.white,
   },
 });

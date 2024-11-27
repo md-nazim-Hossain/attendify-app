@@ -62,7 +62,7 @@ const TextInput = ({
         <TouchableOpacity
           activeOpacity={0.9}
           onPress={() => setShowPassword(!showPassword)}>
-          {showPassword ? (
+          {!showPassword ? (
             <MaterialCommunityIcons
               name="eye-off"
               size={24}

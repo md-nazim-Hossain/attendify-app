@@ -58,5 +58,6 @@ const styles = StyleSheet.create({
   error: {
     color: colors.error,
     fontWeight: 600,
+    marginTop: spacing[1],
   },
 });
