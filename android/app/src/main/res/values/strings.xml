@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Attendify</string>
+    <string name="google_maps_api_key">AIzaSyCrF3S15v-bpacqPEjGxNy__oOO07UqqZ8</string>
 </resources>

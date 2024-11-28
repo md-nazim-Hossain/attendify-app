@@ -50,7 +50,7 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: 'column',
     justifyContent: 'space-between',
-    padding: spacing[3],
+    padding: spacing[5],
     backgroundColor: colors.white,
     gap: spacing[3],
   },
