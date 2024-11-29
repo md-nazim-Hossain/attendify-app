@@ -7,8 +7,7 @@ import TeamScreen from '@/screens/protected/TeamScreen';
 import TakeBreakScreen from '@/screens/protected/TakeBreakScreen';
 import TabBar from '@/components/bottomTabNavigation/TabBar';
 import {useAuth} from './AuthProvider';
-import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
+import {Image, StyleSheet} from 'react-native';
 
 const Tab = createBottomTabNavigator();
 function EmployeeStack() {
@@ -25,11 +24,14 @@ function EmployeeStack() {
         name="Home"
         component={HomeScreen}
         options={{
-          tabBarIcon: ({color, size, focused}) => (
-            <MaterialCommunityIcons
-              name={focused ? 'home' : 'home-outline'}
-              color={color}
-              size={size}
+          tabBarIcon: ({focused}) => (
+            <Image
+              style={styles.icon}
+              source={
+                focused
+                  ? require('@/assets/images/home-active.png')
+                  : require('@/assets/images/home.png')
+              }
             />
           ),
         }}
@@ -38,11 +40,14 @@ function EmployeeStack() {
         name="My Request"
         component={MyRequestScreen}
         options={{
-          tabBarIcon: ({color, size}) => (
-            <MaterialCommunityIcons
-              name="account-outline"
-              color={color}
-              size={size}
+          tabBarIcon: ({focused}) => (
+            <Image
+              style={styles.icon}
+              source={
+                focused
+                  ? require('@/assets/images/request-active.png')
+                  : require('@/assets/images/request.png')
+              }
             />
           ),
         }}
@@ -52,11 +57,15 @@ function EmployeeStack() {
           name="Team"
           component={TeamScreen}
           options={{
-            tabBarIcon: ({color, size}) => (
-              <MaterialCommunityIcons
-                name="account-group-outline"
-                color={color}
-                size={size}
+            tabBarIcon: ({focused}) => (
+              <Image
+                style={[{width: 36, height: 22}]}
+                resizeMode="cover"
+                source={
+                  focused
+                    ? require('@/assets/images/team-active.png')
+                    : require('@/assets/images/team.png')
+                }
               />
             ),
           }}
@@ -66,8 +75,16 @@ function EmployeeStack() {
         name="Take Break"
         component={TakeBreakScreen}
         options={{
-          tabBarIcon: ({color, size}) => (
-            <MaterialIcons name="takeout-dining" color={color} size={size} />
+          tabBarIcon: ({focused}) => (
+            <Image
+              style={{width: 23, height: 22}}
+              resizeMode="cover"
+              source={
+                focused
+                  ? require('@/assets/images/break-active.png')
+                  : require('@/assets/images/break.png')
+              }
+            />
           ),
         }}
       />
@@ -75,11 +92,15 @@ function EmployeeStack() {
         name="Profile"
         component={ProfileScreen}
         options={{
-          tabBarIcon: ({color, size, focused}) => (
-            <MaterialCommunityIcons
-              name={focused ? 'account-circle' : 'account-circle-outline'}
-              color={color}
-              size={size}
+          tabBarIcon: ({focused}) => (
+            <Image
+              style={[{width: 24, height: 24}]}
+              resizeMode="cover"
+              source={
+                focused
+                  ? require('@/assets/images/profile-active.png')
+                  : require('@/assets/images/profile.png')
+              }
             />
           ),
         }}
@@ -89,3 +110,11 @@ function EmployeeStack() {
 }
 
 export default EmployeeStack;
+
+const styles = StyleSheet.create({
+  icon: {
+    width: 26,
+    height: 22,
+    resizeMode: 'cover',
+  },
+});

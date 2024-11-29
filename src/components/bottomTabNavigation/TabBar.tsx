@@ -1,11 +1,12 @@
-import {View, StyleSheet} from 'react-native';
+import {View, StyleSheet, Platform} from 'react-native';
 import {useLinkBuilder} from '@react-navigation/native';
 import {PlatformPressable} from '@react-navigation/elements';
 import * as React from 'react';
 import {BottomTabBarProps} from '@react-navigation/bottom-tabs';
-import {spacing} from '@/theme/spacing';
 import {colors} from '@/theme/colors';
 import Text from '../text/Text';
+import {typography} from '@/theme/typography';
+import {applyOpacity} from '@/utils/applyOpacity';
 
 function TabBar({state, descriptors, navigation}: BottomTabBarProps) {
   const {buildHref} = useLinkBuilder();
@@ -44,9 +45,7 @@ function TabBar({state, descriptors, navigation}: BottomTabBarProps) {
 
         const icon = options.tabBarIcon
           ? options.tabBarIcon({
-              color: isFocused ? colors['light-navy-blue'] : colors.gray,
-              size: 24,
-              fontWeight: isFocused ? 700 : 300,
+              focused: isFocused,
             } as any)
           : null;
 
@@ -59,13 +58,13 @@ function TabBar({state, descriptors, navigation}: BottomTabBarProps) {
             testID={options.tabBarButtonTestID}
             onPress={onPress}
             onLongPress={onLongPress}
-            style={styles.platform}>
+            style={[styles.platform]}>
             <View>{icon}</View>
             <Text
               preset="small"
               style={[
+                styles.labelStyle,
                 {color: isFocused ? colors['dark-navy-blue'] : colors.gray},
-                {fontWeight: isFocused ? 700 : 500},
               ]}>
               {label as string}
             </Text>
@@ -80,12 +79,28 @@ export default TabBar;
 
 const styles = StyleSheet.create({
   container: {
+    backgroundColor: colors.white,
     flexDirection: 'row',
+    ...(Platform.OS === 'ios' && {
+      shadowColor: applyOpacity(colors.black, 0.29),
+      shadowOffset: {width: 0, height: 4},
+      shadowOpacity: 0.29,
+      shadowRadius: 4,
+    }),
+    ...(Platform.OS === 'android' && {
+      elevation: 4,
+    }),
   },
   platform: {
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
-    paddingVertical: spacing[1],
+    height: 62,
+  },
+  labelStyle: {
+    fontFamily: typography.primaryExtraBold,
+    fontWeight: 900,
+    letterSpacing: 1,
+    marginTop: 4,
   },
 });
