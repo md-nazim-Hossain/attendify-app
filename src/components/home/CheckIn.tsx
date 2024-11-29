@@ -29,15 +29,16 @@ const CheckIn = () => {
         <View style={styles.locationContainer}>
           <MaterialCommunityIcons
             name="map-marker-outline"
-            size={24}
+            size={16}
             color={colors.gray}
           />
-          <Text preset="h3" style={styles.text}>
+          <Text preset="h5" style={styles.text}>
             Location:Dhaka
           </Text>
         </View>
         <View style={styles.alermClockContainer}>
           <CheckInOutButton
+            disabled
             imageStyle={styles.imageStyle}
             outerShadow={false}
             gradientStyle={styles.alermClockGradientStyle}
@@ -92,8 +93,8 @@ const styles = StyleSheet.create({
     gap: spacing[1],
   },
   text: {
-    fontFamily: typography.primaryExtraBold,
-    fontWeight: 900,
+    fontFamily: typography.primaryBold,
+    fontWeight: 700,
     color: colors.gray,
     letterSpacing: 1.5,
   },

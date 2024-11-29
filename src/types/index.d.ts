@@ -113,3 +113,9 @@ export interface Measure {
   width: number;
   height: number;
 }
+
+export interface ITimeClockProps {
+  hours: string;
+  minutes: string;
+  seconds: string;
+}

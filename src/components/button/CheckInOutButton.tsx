@@ -57,6 +57,7 @@ const CheckInOutButton = ({
         <TouchableOpacity
           onPress={onPress}
           disabled={disabled}
+          style={styles.touchableButton}
           activeOpacity={0.9}>
           <LinearGradient
             colors={colors}
@@ -96,6 +97,9 @@ const styles = StyleSheet.create({
     position: 'absolute',
     inset: 0,
     transform: [{scale: 1.15}],
+  },
+  touchableButton: {
+    borderRadius: '50%',
   },
   gradient: {
     width: 180,

@@ -5,6 +5,7 @@ export const colors = {
   'dark-navy-blue': '#1A124D',
   'medium-navy-blue': '#4F4493',
   'light-navy-blue': '#233863',
+  'extra-dark-navy-blue': '#2A394D',
   gray: '#909092',
   'light-gray': '#D9D9D9',
   white: '#FFFFFF',
