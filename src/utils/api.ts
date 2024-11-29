@@ -1,19 +1,20 @@
+import {AxiosResponse} from 'axios';
 import axios from './axios';
 
 export const api = {
-  get: <T>(url: string, params?: object) => {
-    axios.get<T>(url, {params});
+  get: <T>(url: string, params?: object): Promise<AxiosResponse<T>> => {
+    return axios.get<T>(url, {params});
   },
-  post: <T>(url: string, data?: object) => {
-    axios.post<T>(url, data);
+  post: <T>(url: string, data: any): Promise<AxiosResponse<T>> => {
+    return axios.post<T>(url, data);
   },
-  put: <T>(url: string, data?: object) => {
-    axios.put<T>(url, data);
+  put: <T>(url: string, data?: any): Promise<AxiosResponse<T>> => {
+    return axios.put<T>(url, data);
   },
   delete: <T>(url: string) => {
-    axios.delete<T>(url);
+    return axios.delete<T>(url);
   },
-  patch: <T>(url: string, data?: object) => {
-    axios.patch<T>(url, data);
+  patch: <T>(url: string, data?: any) => {
+    return axios.patch<T>(url, data);
   },
 };

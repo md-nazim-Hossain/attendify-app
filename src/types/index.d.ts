@@ -126,3 +126,12 @@ export interface IInfiniteScrollAPIResponse<T> {
 }
 
 export type QueryKeyT = [string, object | undefined];
+export interface GetInfinitePagesInterface<T> {
+  meta: {
+    nextId: number | null;
+    previousId: number | null;
+    currentId: number | null;
+    total: number;
+  };
+  data: T;
+}
