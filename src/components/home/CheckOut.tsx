@@ -66,6 +66,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: 'space-between',
+    padding: spacing[8],
   },
   clockContainer: {},
   title: {
