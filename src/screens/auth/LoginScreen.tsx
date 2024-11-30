@@ -11,15 +11,41 @@ import Text from '@/components/text/Text';
 import GradientButton from '@/components/button/GradientButton';
 import {Link} from '@react-navigation/native';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import {apiRoutes} from '@/utils/apiRoutes';
+import {api} from '@/utils/api';
+import {IAPIResponse, ILoginEmployeeResponse} from '@/types';
+import CookieManager from '@react-native-cookies/cookies';
+import {config} from '@/config';
 
 const LoginScreen = ({}) => {
   const form = useForm<ILoginSchema>({
     resolver: zodResolver(logingSchema),
     mode: 'all',
   });
-
   async function onSubmit(values: ILoginSchema) {
-    console.log(values);
+    try {
+      const resp = (await api
+        .post(apiRoutes.auth.login, values)
+        .then(res => res.data)) as IAPIResponse<ILoginEmployeeResponse>;
+      const data = resp?.data;
+      if (!data || !data?.accessToken) {
+        throw new Error('No data found');
+      }
+
+      await CookieManager.set(config.API_BASE_URL, {
+        name: 'accessToken',
+        value: data?.accessToken,
+      });
+
+      if (data?.refreshToken) {
+        await CookieManager.set(config.API_BASE_URL, {
+          name: 'refreshToken',
+          value: data?.refreshToken || '',
+        });
+      }
+    } catch (error) {
+      console.log({error});
+    }
   }
 
   return (
@@ -36,14 +62,14 @@ const LoginScreen = ({}) => {
         <View>
           <FormField
             form={form}
-            name="email"
-            keyboardType="email-address"
-            placeholder="Enter email"
+            name="employeeId"
+            keyboardType="numeric"
+            placeholder="Enter Employee ID"
             Icon={
               <MaterialCommunityIcons
                 size={24}
                 style={styles.iconStyle}
-                name="email"
+                name="account"
               />
             }
           />
@@ -68,8 +94,8 @@ const LoginScreen = ({}) => {
         </View>
         <View style={styles.buttonContainer}>
           <GradientButton
-            disabled={!form.formState.isSubmitting}
-            title="Sign-In"
+            disabled={form.formState.isSubmitting}
+            title={form.formState.isSubmitting ? 'Signing-In...' : 'Sign-In'}
             textStyle={styles.button}
             colors={[colors.white, '#CDCBD8', '#4D4774']}
             onPress={form.handleSubmit(onSubmit)}

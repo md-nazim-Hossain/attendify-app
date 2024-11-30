@@ -135,3 +135,21 @@ export interface GetInfinitePagesInterface<T> {
   };
   data: T;
 }
+export type IAPIResponse<T = unknown> = {
+  success: boolean;
+  data: T | null;
+  message: string;
+  error: string | null;
+  meta?: {
+    nextId: number | null;
+    previousId: number | null;
+    currentId: number | null;
+    total: number;
+  };
+};
+
+export interface ILoginEmployeeResponse {
+  accessToken: string;
+  refreshToken?: string;
+  status: boolean;
+}

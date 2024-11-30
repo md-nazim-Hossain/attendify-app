@@ -2,14 +2,14 @@ import {View, StyleSheet, ActivityIndicator} from 'react-native';
 import React from 'react';
 // import CheckIn from '@/components/home/CheckIn';
 import CheckOut from '@/components/home/CheckOut';
-import {useFetch} from '@/utils/reactQuery';
+// import {useFetch} from '@/utils/reactQuery';
 
 const HomeScreen = () => {
-  const {data, isLoading} = useFetch('/posts/1');
-  if (isLoading) {
-    return <ActivityIndicator size={'large'} />;
-  }
-  console.log(data);
+  // const {data, isLoading} = useFetch('/posts/1');
+  // if (isLoading) {
+  //   return <ActivityIndicator size={'large'} />;
+  // }
+  // console.log(data);
   return (
     <View style={styles.container}>
       {/* <CheckIn /> */}

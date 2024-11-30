@@ -52,7 +52,7 @@ function EmployeeStack() {
           ),
         }}
       />
-      {!isAdmin && (
+      {isAdmin && (
         <Tab.Screen
           name="Team"
           component={TeamScreen}

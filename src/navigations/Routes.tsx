@@ -8,7 +8,7 @@ const Routes = () => {
   const {isAuthenticated} = useAuth();
   return (
     <NavigationContainer>
-      {!isAuthenticated ? <EmployeeStack /> : <AuthStack />}
+      {isAuthenticated ? <EmployeeStack /> : <AuthStack />}
     </NavigationContainer>
   );
 };

@@ -2,7 +2,8 @@ export const apiRoutes = {
   auth: {
     login: '/auth/login',
     register: '/auth/register',
-    forgottenPassword: '/auth/forgotten-password',
+    changePassword: '/auth/change-password',
+    profile: '/auth/profile',
   },
 };
 

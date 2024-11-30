@@ -2,9 +2,9 @@ import {ENUM_BREAK_TYPE, ENUM_LEAVE_TYPE} from '@/enums';
 import {z} from 'zod';
 
 export const logingSchema = z.object({
-  email: z
-    .string({required_error: 'Email is required'})
-    .email({message: 'Invalid email'}),
+  employeeId: z
+    .string({required_error: 'Employee ID is required'})
+    .min(6, {message: 'Employee ID must be at least 6 characters'}),
   password: z
     .string({required_error: 'Password is required'})
     .min(6, {message: 'Password must be at least 6 characters'}),
