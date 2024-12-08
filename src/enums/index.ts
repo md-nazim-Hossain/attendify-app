@@ -1,12 +1,17 @@
-export enum ENUM_EMPLOYEE_ROLE {
-  EMPLOYEE = 'employee',
-  ADMIN = 'admin',
-}
-
-export enum ENUM_EMPLOYEE_GENDER {
+export enum ENUM_USER_GENDER {
   MALE = 'male',
   FEMALE = 'female',
   OTHER = 'other',
+}
+
+export enum ENUM_USER_STATUS {
+  ACTIVE = 'active',
+  INACTIVE = 'inactive',
+}
+
+export enum ENUM_EMPLOYEE_ROLE {
+  EMPLOYEE = 'employee',
+  ADMIN = 'admin',
 }
 
 export enum ENUM_ATTENDANCE_STATUS {
@@ -62,4 +67,21 @@ export enum ENUM_TEAM_DESIGNATIONS {
   SENIOR = 'senior',
   JUNIOR = 'junior',
   INTERN = 'intern',
+}
+
+export enum ENUM_COMPANY_STATUS {
+  ACTIVE = 'active',
+  INACTIVE = 'inactive',
+}
+
+export enum ENUM_COMPANY_TYPE {
+  SOFTWARE = 'software',
+  HARDWARE = 'hardware',
+  OTHER = 'other',
+}
+
+export enum ENUM_COMPANY_SIZE {
+  SMALL = 'small',
+  MEDIUM = 'medium',
+  LARGE = 'large',
 }

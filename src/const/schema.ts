@@ -2,9 +2,9 @@ import {ENUM_BREAK_TYPE, ENUM_LEAVE_TYPE} from '@/enums';
 import {z} from 'zod';
 
 export const logingSchema = z.object({
-  employeeId: z
+  email: z
     .string({required_error: 'Employee ID is required'})
-    .min(6, {message: 'Employee ID must be at least 6 characters'}),
+    .email({message: 'Invalid email'}),
   password: z
     .string({required_error: 'Password is required'})
     .min(6, {message: 'Password must be at least 6 characters'}),
@@ -60,7 +60,7 @@ export type IAddDailyBreakRequestSchema = z.infer<
 
 export const updateEmployeeSchema = z.object({
   fullName: z.string({required_error: 'Name is required'}),
-  email: z
+  employeeEmail: z
     .string({required_error: 'Email is required'})
     .email({message: 'Invalid email'}),
   phone: z.string({required_error: 'Phone is required'}).optional(),

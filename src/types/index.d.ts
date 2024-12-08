@@ -2,33 +2,76 @@ import {
   ENUM_ACTIVITY_STATUS,
   ENUM_ATTENDANCE_STATUS,
   ENUM_BREAK_TYPE,
-  ENUM_EMPLOYEE_GENDER,
+  ENUM_COMPANY_SIZE,
+  ENUM_COMPANY_STATUS,
+  ENUM_COMPANY_TYPE,
   ENUM_EMPLOYEE_ROLE,
   ENUM_LEAVE_STATUS,
   ENUM_LEAVE_TYPE,
   ENUM_PROJECT_STATUS,
   ENUM_TEAM_DESIGNATIONS,
   ENUM_TEAM_STATUS,
+  ENUM_USER_GENDER,
+  ENUM_USER_STATUS,
 } from '@/enums';
 
-export type IEmployee = {
+export interface IUser {
+  _id: string;
+  name: string;
+  email: string;
+  passwordChangeAt?: string | Date;
+  status: ENUM_USER_STATUS;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface ICompany {
+  _id: string;
+  name: string;
+  domain: string;
+  verfiedAt?: Date;
+  owner: string | IUser;
+  status: ENUM_COMPANY_STATUS;
+}
+
+export interface ICompanyDetails {
+  _id: string;
+  email: string;
+  phone?: string;
+  address: string;
+  website?: string;
+  logo?: string;
+  type?: ENUM_COMPANY_TYPE;
+  createdAt: string;
+  updatedAt: string;
+  description?: string;
+  totalEmployees?: number;
+  size?: ENUM_COMPANY_SIZE;
+  regNumber?: string;
+  officeStartTime: string;
+  officeEndTime: string;
+  company: string | ICompany;
+}
+
+export interface IEmployee {
   _id: string;
   employeeId: string;
-  fullName: string;
-  email: string;
+  user: string | IUser;
+  company: string | ICompany;
+  fullName?: string;
+  photo?: string;
+  employeeEmail: string;
   phone?: string;
   address?: string;
   designation: string;
-  team?: string | ITeam;
-  gender?: ENUM_EMPLOYEE_GENDER;
-  photo?: string;
-  password: string;
-  passwordChangeAt?: string | Date;
   role: ENUM_EMPLOYEE_ROLE;
-  status: boolean;
-  creaedAt: string;
+  status: ENUM_EMPLOYEE_STATUS;
+  photo?: string;
+  gender?: ENUM_USER_GENDER;
+  dob?: string;
+  createdAt: string;
   updatedAt: string;
-};
+}
 
 export interface IEmployeeAttendance {
   _id: string;
@@ -148,8 +191,14 @@ export type IAPIResponse<T = unknown> = {
   };
 };
 
-export interface ILoginEmployeeResponse {
+export interface ILoginUserResponse {
   accessToken: string;
   refreshToken?: string;
-  status: boolean;
+  status: ENUM_USER_STATUS;
 }
+
+export type IEmployeeWithUser =
+  | (IUser & {
+      employee: IEmployee | null;
+    })
+  | null;

@@ -4,26 +4,28 @@ import {ActivityIndicator, View} from 'react-native';
 import {useFetch} from '@/utils/reactQuery';
 import {apiRoutes} from '@/utils/apiRoutes';
 import {config} from '@/config';
-import {IAPIResponse, IEmployee} from '@/types';
+import {IAPIResponse, IEmployeeWithUser} from '@/types';
 import {ENUM_EMPLOYEE_ROLE} from '@/enums';
 
 type IContext = {
-  employee: IEmployee | null;
-  setEmployee: React.Dispatch<React.SetStateAction<IEmployee | null>>;
+  user: IEmployeeWithUser;
+  setUser: React.Dispatch<React.SetStateAction<IEmployeeWithUser>>;
   isAuthenticated: boolean;
   isAdmin: boolean;
+  isJoinCompany: boolean;
 };
 
 export const AuthContext = createContext<IContext>({
-  employee: null,
-  setEmployee: () => {},
+  user: null,
+  setUser: () => {},
   isAuthenticated: false,
   isAdmin: false,
+  isJoinCompany: false,
 });
 
 export const AuthProvider = ({children}: {children: React.ReactNode}) => {
   const [accessToken, setAccessToken] = useState<string | null>(null);
-  const [employee, setEmployee] = useState<IEmployee | null>(null);
+  const [user, setUser] = useState<IEmployeeWithUser>(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -33,7 +35,6 @@ export const AuthProvider = ({children}: {children: React.ReactNode}) => {
         const token = cookies?.accessToken?.value;
         setAccessToken(token || null);
       } catch (error) {
-        console.error('Error loading access token:', error);
         setLoading(false);
       }
     };
@@ -41,7 +42,7 @@ export const AuthProvider = ({children}: {children: React.ReactNode}) => {
     loadAccessToken();
   }, []);
 
-  const {isLoading, data} = useFetch<IAPIResponse<IEmployee>>(
+  const {isLoading, data, error} = useFetch<IAPIResponse<IEmployeeWithUser>>(
     apiRoutes.auth.profile,
     {accessToken},
     {
@@ -52,13 +53,26 @@ export const AuthProvider = ({children}: {children: React.ReactNode}) => {
 
   useEffect(() => {
     if (data?.data) {
-      setEmployee(data.data);
+      setUser(data.data);
       setLoading(false);
     }
-  }, [data]);
 
-  const isAuthenticated = !!employee;
-  const isAdmin = employee?.role === ENUM_EMPLOYEE_ROLE.ADMIN;
+    if (error) {
+      setLoading(false);
+      if (error?.response?.status === 401 || error?.response?.status === 403) {
+        CookieManager.set(config.API_BASE_URL, {
+          name: 'accessToken',
+          value: '',
+          expires: new Date(0).toDateString(),
+        });
+        setAccessToken(null);
+        setUser(null);
+      }
+    }
+  }, [data, error]);
+
+  const isAuthenticated = !!user;
+  const isAdmin = user?.employee?.role === ENUM_EMPLOYEE_ROLE.ADMIN;
 
   if (loading || isLoading) {
     return (
@@ -71,10 +85,11 @@ export const AuthProvider = ({children}: {children: React.ReactNode}) => {
   return (
     <AuthContext.Provider
       value={{
-        employee,
-        setEmployee,
+        user,
+        setUser,
         isAuthenticated,
         isAdmin,
+        isJoinCompany: !!user?.employee?.company,
       }}>
       {children}
     </AuthContext.Provider>

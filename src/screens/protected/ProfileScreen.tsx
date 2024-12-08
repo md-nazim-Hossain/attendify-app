@@ -11,10 +11,19 @@ import {IUpdateEmployeeSchema, updateEmployeeSchema} from '@/const/schema';
 import {zodResolver} from '@hookform/resolvers/zod';
 import FormField from '@/components/form/FormField';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import {useAuth} from '@/navigations/AuthProvider';
 
 const ProfileScreen = () => {
+  const {user} = useAuth();
   const form = useForm<IUpdateEmployeeSchema>({
     resolver: zodResolver(updateEmployeeSchema),
+    defaultValues: user?.employee ?? {
+      fullName: '',
+      designation: '',
+      employeeEmail: '',
+      phone: '',
+      address: '',
+    },
     mode: 'all',
   });
 
@@ -29,11 +38,15 @@ const ProfileScreen = () => {
           <View style={styles.imageContainer}>
             <Image
               style={styles.image}
-              source={require('@/assets/images/girl.png')}
+              source={
+                user?.employee?.photo
+                  ? {uri: user?.employee?.photo}
+                  : require('@/assets/images/girl.png')
+              }
             />
           </View>
           <Text preset="h5" style={styles.text}>
-            Employee Id: 0958686
+            Employee Id: {user?.employee?.employeeId}
           </Text>
         </View>
 
@@ -67,7 +80,7 @@ const ProfileScreen = () => {
         />
         <FormField
           form={form}
-          name="email"
+          name="employeeEmail"
           placeholder="Email"
           variant="editable"
           errorStyle={styles.errorStyle}
@@ -142,6 +155,7 @@ const styles = StyleSheet.create({
     width: '100%',
     height: '100%',
     resizeMode: 'cover',
+    borderRadius: 126 / 2,
   },
   text: {
     color: colors['muted-foreground'],

@@ -13,7 +13,7 @@ import {Link} from '@react-navigation/native';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import {apiRoutes} from '@/utils/apiRoutes';
 import {api} from '@/utils/api';
-import {IAPIResponse, ILoginEmployeeResponse} from '@/types';
+import {IAPIResponse, ILoginUserResponse} from '@/types';
 import CookieManager from '@react-native-cookies/cookies';
 import {config} from '@/config';
 
@@ -26,7 +26,7 @@ const LoginScreen = ({}) => {
     try {
       const resp = (await api
         .post(apiRoutes.auth.login, values)
-        .then(res => res.data)) as IAPIResponse<ILoginEmployeeResponse>;
+        .then(res => res.data)) as IAPIResponse<ILoginUserResponse>;
       const data = resp?.data;
       if (!data || !data?.accessToken) {
         throw new Error('No data found');
@@ -62,9 +62,8 @@ const LoginScreen = ({}) => {
         <View>
           <FormField
             form={form}
-            name="employeeId"
-            keyboardType="numeric"
-            placeholder="Enter Employee ID"
+            name="email"
+            placeholder="Enter email"
             Icon={
               <MaterialCommunityIcons
                 size={24}
