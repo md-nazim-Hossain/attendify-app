@@ -12,19 +12,52 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 import {typography} from '@/theme/typography';
 import {colors} from '@/theme/colors';
 import {DropdownMenu, MenuOption} from '../dropdownmenu/DropDownMenu';
-type Props = {
-  name: string;
-  logo: ImageRequireSource;
-  createdAt: string;
-  address: string;
+import {IAPIResponse, ICompany, ILoginUserResponse} from '@/types';
+import {apiRoutes} from '@/utils/apiRoutes';
+import axios from '@/utils/axios';
+import CookieManager from '@react-native-cookies/cookies';
+import {config} from '@/config';
+import {useQueryClient} from '@tanstack/react-query';
+type Props = ICompany & {
   isLast?: boolean;
 };
-const Company = ({address, createdAt, logo, name, isLast}: Props) => {
+const Company = ({name, isLast, createdAt, _id}: Props) => {
   const [visible, setVisible] = useState(false);
+  const queryClient = useQueryClient();
+  const handleJoinCompany = async () => {
+    try {
+      const resp = (await axios
+        .post(`${apiRoutes.auth.loginCompany}/${_id}`)
+        .then(res => res.data)) as IAPIResponse<ILoginUserResponse>;
+      const data = resp?.data;
+      if (!data || !data?.accessToken) {
+        throw new Error('No data found');
+      }
+      await CookieManager.set(config.API_BASE_URL, {
+        name: 'accessToken',
+        value: data?.accessToken,
+      });
+
+      if (data?.refreshToken) {
+        await CookieManager.set(config.API_BASE_URL, {
+          name: 'refreshToken',
+          value: data?.refreshToken || '',
+        });
+      }
+      queryClient.invalidateQueries({
+        queryKey: [apiRoutes.auth.profile, {accessToken: data?.accessToken}],
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
   return (
     <View style={[styles.company, !isLast && {marginBottom: spacing[2]}]}>
-      <TouchableOpacity activeOpacity={0.9} style={styles.loginCompany}>
-        <Image style={styles.companyLogo} source={logo} />
+      <TouchableOpacity
+        onPress={handleJoinCompany}
+        activeOpacity={0.9}
+        style={styles.loginCompany}>
+        {/* <Image style={styles.companyLogo} source={logo} /> */}
         <View>
           <Text preset="small" style={styles.companyName}>
             {name}

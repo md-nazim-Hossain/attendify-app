@@ -1,4 +1,4 @@
-import {View, Image} from 'react-native';
+import {View, Image, TouchableOpacity} from 'react-native';
 import React from 'react';
 import {StyleSheet} from 'react-native';
 import {applyOpacity} from '@/utils/applyOpacity';
@@ -12,9 +12,12 @@ import {zodResolver} from '@hookform/resolvers/zod';
 import FormField from '@/components/form/FormField';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import {useAuth} from '@/navigations/AuthProvider';
+import {apiRoutes} from '@/utils/apiRoutes';
+import {api} from '@/utils/api';
+import {launchImageLibrary} from 'react-native-image-picker';
 
 const ProfileScreen = () => {
-  const {user} = useAuth();
+  const {user, refetch} = useAuth();
   const form = useForm<IUpdateEmployeeSchema>({
     resolver: zodResolver(updateEmployeeSchema),
     defaultValues: user?.employee ?? {
@@ -28,8 +31,38 @@ const ProfileScreen = () => {
   });
 
   async function onSubmit(values: IUpdateEmployeeSchema) {
-    console.log(values);
+    try {
+      await api.patch(
+        `${apiRoutes.employee.employees}/${user?.employee?.employeeId}`,
+        values,
+      );
+      refetch();
+      form.reset();
+    } catch (error) {
+      console.log(error);
+    }
   }
+
+  const handleChoosePhoto = () => {
+    launchImageLibrary(
+      {
+        mediaType: 'photo',
+        maxWidth: 500,
+        maxHeight: 500,
+        quality: 0.7,
+      },
+      async response => {
+        if (response.didCancel) {
+          console.log('User cancelled image picker');
+        } else if (response.errorMessage) {
+          console.error('ImagePicker Error: ', response.errorMessage);
+        } else {
+          const uri = response?.assets?.[0]?.uri;
+          console.log('Selected Image: ', uri);
+        }
+      },
+    );
+  };
 
   return (
     <View style={styles.container}>
@@ -44,6 +77,16 @@ const ProfileScreen = () => {
                   : require('@/assets/images/girl.png')
               }
             />
+            <TouchableOpacity
+              activeOpacity={0.9}
+              onPress={handleChoosePhoto}
+              style={styles.editIconContainer}>
+              <MaterialCommunityIcons
+                name="pencil"
+                size={20}
+                color={colors['muted-foreground']}
+              />
+            </TouchableOpacity>
           </View>
           <Text preset="h5" style={styles.text}>
             Employee Id: {user?.employee?.employeeId}
@@ -150,12 +193,25 @@ const styles = StyleSheet.create({
     backgroundColor: applyOpacity(colors['medium-navy-blue'], 0.15),
     borderWidth: 1,
     borderColor: colors.black,
+    position: 'relative',
   },
   image: {
     width: '100%',
     height: '100%',
     resizeMode: 'cover',
     borderRadius: 126 / 2,
+  },
+  editIconContainer: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    width: 35,
+    height: 35,
+    borderRadius: 35 / 2,
+    backgroundColor: colors['light-gray'],
+    position: 'absolute',
+    bottom: 10,
+    right: 0,
+    zIndex: 1,
   },
   text: {
     color: colors['muted-foreground'],

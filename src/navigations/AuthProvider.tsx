@@ -6,6 +6,8 @@ import {apiRoutes} from '@/utils/apiRoutes';
 import {config} from '@/config';
 import {IAPIResponse, IEmployeeWithUser} from '@/types';
 import {ENUM_EMPLOYEE_ROLE} from '@/enums';
+import {QueryObserverResult, RefetchOptions} from '@tanstack/react-query';
+import {AxiosError} from 'axios';
 
 type IContext = {
   user: IEmployeeWithUser;
@@ -13,6 +15,11 @@ type IContext = {
   isAuthenticated: boolean;
   isAdmin: boolean;
   isJoinCompany: boolean;
+  refetch: (
+    options?: RefetchOptions,
+  ) => Promise<
+    QueryObserverResult<IAPIResponse<IEmployeeWithUser>, AxiosError<any, any>>
+  >;
 };
 
 export const AuthContext = createContext<IContext>({
@@ -21,6 +28,7 @@ export const AuthContext = createContext<IContext>({
   isAuthenticated: false,
   isAdmin: false,
   isJoinCompany: false,
+  refetch: () => Promise.resolve({} as any),
 });
 
 export const AuthProvider = ({children}: {children: React.ReactNode}) => {
@@ -42,7 +50,9 @@ export const AuthProvider = ({children}: {children: React.ReactNode}) => {
     loadAccessToken();
   }, []);
 
-  const {isLoading, data, error} = useFetch<IAPIResponse<IEmployeeWithUser>>(
+  const {isLoading, data, error, refetch} = useFetch<
+    IAPIResponse<IEmployeeWithUser>
+  >(
     apiRoutes.auth.profile,
     {accessToken},
     {
@@ -69,6 +79,9 @@ export const AuthProvider = ({children}: {children: React.ReactNode}) => {
         setUser(null);
       }
     }
+    if (!data && !error) {
+      setLoading(false);
+    }
   }, [data, error]);
 
   const isAuthenticated = !!user;
@@ -89,7 +102,8 @@ export const AuthProvider = ({children}: {children: React.ReactNode}) => {
         setUser,
         isAuthenticated,
         isAdmin,
-        isJoinCompany: !!user?.employee?.company,
+        isJoinCompany: !!user?.companyId,
+        refetch,
       }}>
       {children}
     </AuthContext.Provider>

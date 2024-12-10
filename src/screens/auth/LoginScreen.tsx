@@ -9,11 +9,11 @@ import {ILoginSchema, logingSchema} from '@/const/schema';
 import {zodResolver} from '@hookform/resolvers/zod';
 import Text from '@/components/text/Text';
 import GradientButton from '@/components/button/GradientButton';
-import {Link} from '@react-navigation/native';
+import {Link, useNavigation} from '@react-navigation/native';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import {apiRoutes} from '@/utils/apiRoutes';
 import {api} from '@/utils/api';
-import {IAPIResponse, ILoginUserResponse} from '@/types';
+import {AuthNavigationProp, IAPIResponse, ILoginUserResponse} from '@/types';
 import CookieManager from '@react-native-cookies/cookies';
 import {config} from '@/config';
 
@@ -22,6 +22,7 @@ const LoginScreen = ({}) => {
     resolver: zodResolver(logingSchema),
     mode: 'all',
   });
+  const navigation = useNavigation<AuthNavigationProp>();
   async function onSubmit(values: ILoginSchema) {
     try {
       const resp = (await api
@@ -31,7 +32,6 @@ const LoginScreen = ({}) => {
       if (!data || !data?.accessToken) {
         throw new Error('No data found');
       }
-
       await CookieManager.set(config.API_BASE_URL, {
         name: 'accessToken',
         value: data?.accessToken,
@@ -43,6 +43,7 @@ const LoginScreen = ({}) => {
           value: data?.refreshToken || '',
         });
       }
+      navigation.navigate('MyCompanies');
     } catch (error) {
       console.log({error});
     }

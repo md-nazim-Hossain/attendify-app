@@ -14,6 +14,7 @@ import {
   ENUM_USER_GENDER,
   ENUM_USER_STATUS,
 } from '@/enums';
+import {StackNavigationProp} from '@react-navigation/stack';
 
 export interface IUser {
   _id: string;
@@ -32,6 +33,8 @@ export interface ICompany {
   verfiedAt?: Date;
   owner: string | IUser;
   status: ENUM_COMPANY_STATUS;
+  createdAt: string;
+  updatedAt: string;
 }
 
 export interface ICompanyDetails {
@@ -200,5 +203,17 @@ export interface ILoginUserResponse {
 export type IEmployeeWithUser =
   | (IUser & {
       employee: IEmployee | null;
+      companyId: string | null;
     })
   | null;
+
+export type AuthStackParamList = {
+  MyCompanies: undefined;
+  Login: undefined;
+  ForgottenPassword: undefined;
+};
+
+export type AuthNavigationProp = StackNavigationProp<
+  AuthStackParamList,
+  'MyCompanies'
+>;

@@ -66,7 +66,7 @@ export const updateEmployeeSchema = z.object({
   phone: z.string({required_error: 'Phone is required'}).optional(),
   address: z.string({required_error: 'Address is required'}).optional(),
   designation: z.string({required_error: 'Designation is required'}).optional(),
-  photo: z.string({required_error: 'Photo is required'}).optional(),
+  photo: z.any().optional(),
 });
 
 export type IUpdateEmployeeSchema = z.infer<typeof updateEmployeeSchema>;
